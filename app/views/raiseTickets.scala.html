@@ -1,0 +1,29 @@
+@(tic_id: String, ticket: model.Ticket)
+
+<!DOCTYPE html>
+
+<html lang="en">
+<form method="POST" action="/newTicketPage">
+    <head>
+    <title>Welcome </title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
+    </head>
+    <body>
+        <p>
+        Customer Information<input type="text" name="customerInfo" value=@ticket.customerInfo><p>
+        Comments <input type="text" name="comment" value=@ticket.comment><p>
+        Created By<input type="text" name="createdBy" value=@ticket.createdBy><p>
+        Assigned To<input type="text" name="assignedTo"  value=@ticket.assignedTo><p>
+       	Status<select name="status" >
+       	<option value='New'>New</option>
+       	<option value='Open'>Open</option>
+       	<option value="Closed">Closed</option>	
+       	</select>
+        <input type="submit" name="submit" value="Send">
+        
+    </body>
+    
+    </form>
+</html>

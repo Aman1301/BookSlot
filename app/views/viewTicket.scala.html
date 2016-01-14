@@ -1,0 +1,33 @@
+@(ticketsListNew: List[model.Ticket],ticketsListOpen: List[model.Ticket],ticketsListClosed: List[model.Ticket])
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+    <title>Welcome </title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
+    </head>
+    <body>
+    <form method="GET" action="/displayTickets">
+    <p>New<p>
+    @for(newS <- ticketsListNew){
+	@newS.ticketId<a href="/editTicketStatus/@newS.ticketId"> Edit</a><p>
+	@newS.customerInfo<p>
+}
+<p>Open<p>	
+   @for(open <- ticketsListOpen){
+	@open.ticketId<a href="/editTicketStatus/@open.ticketId"> Edit</a><p>
+	@open.customerInfo<p>
+}
+<p>Closed<p>
+  @for(closed <- ticketsListClosed){
+	@closed.ticketId<p>
+	@closed.customerInfo<p>
+}
+
+    </form>
+    </body>
+    
+</html>
