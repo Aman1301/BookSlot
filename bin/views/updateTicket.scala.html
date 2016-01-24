@@ -13,15 +13,16 @@
 </head>
 <body>
 	<!--     <form method="POST" action="/updateTicket/@tic_id"> -->
-	@helper.form(action=routes.Application.updateTicket(tic_id)){
+	@helper.form(action=routes.Application.updateTicket(tic_id) ){
 	<p>
 	<fieldset>
-	    @helper.inputText(ticket("ticketId"))
-		@helper.inputText(ticket("customerInfo"))
-		@helper.inputText(ticket("comment"))
-		@helper.inputText(ticket("createdBy"))
-		@helper.inputText(ticket("assignedTo"))
-		@helper.inputText(ticket("status"))
+	<legend>Edit Ticket Details</legend>
+	    @helper.inputText(ticket("ticketId"), '_label -> "Ticket Id",'readonly -> "readonly")
+		@helper.inputText(ticket("customerInfo"), '_label -> "Customer Info")
+		@helper.inputText(ticket("comment"), '_label -> "Comment")
+		@helper.inputText(ticket("createdBy"), '_label -> "Created By")
+		@helper.inputText(ticket("assignedTo"), '_label -> "Assigned To")
+		@select(field = ticket("status"), options = Seq("New"->"New", "Open"->"Open", "Closed"->"Closed"),'_label -> "Status")
 	</fieldset>
 	
 	<input type="submit" name="submit" value="Update">

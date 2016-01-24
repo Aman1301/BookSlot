@@ -3,14 +3,14 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import play.*;
-import play.data.Form;
-import play.mvc.*;
-import views.html.*;
 import model.Ticket;
 import model.User;
-import model.service;
-
+import play.data.Form;
+import play.mvc.Controller;
+import play.mvc.Result;
+import Service.service;
+import views.html.*;
+import play.*;
 public class Application extends Controller {
 
 	private  service s= null;
@@ -27,18 +27,21 @@ public class Application extends Controller {
     }
 
     public Result sayHello() {
+    	
     	User  u= Form.form(User.class).bindFromRequest().get();
-    	boolean status=getService().checkUser(u);
+    	boolean status=getService().checkValidUser(u);
     	System.out.println(status);
-    	if(status)
+    	if(status){
         return ok(welcome.render(u.username));
+    	}
     	else {
     	return ok(index.render("Invalid Username/Password"));
 		}
     }
     
     public Result newTicketPage() {
-        return ok(raiseTickets.render(null,new Ticket()));
+    	Form<Ticket> ft= Form.form(Ticket.class).fill(new Ticket());
+        return ok(raiseTickets.render(null,ft));
     }
     
     public Result displayTickets() {
@@ -66,7 +69,8 @@ public class Application extends Controller {
     	System.out.println(t.customerInfo);
     	System.out.println(t.createdBy);
     	System.out.println("t.ticketId "+t.ticketId);
-        return ok(raiseTickets.render(null,new Ticket()));
+    	Form<Ticket> ft= Form.form(Ticket.class).fill(new Ticket());
+        return ok(raiseTickets.render(null,ft));
     }
     
     public Result editTicketStatus(String ticket_id) {
@@ -80,6 +84,20 @@ public class Application extends Controller {
     	Ticket  t= Form.form(Ticket.class).bindFromRequest().get();
     	
     	boolean tics=getService().updateTicket(t);
-        return ok(welcome.render(""));
+    	List<Ticket> ticketsList= getService().getAllTickets();
+    	List<Ticket> ticketsListNew=new ArrayList<Ticket>();
+    	List<Ticket> ticketsListOpen=new ArrayList<Ticket>();
+    	List<Ticket> ticketsListClosed=new ArrayList<Ticket>();
+    	for(Ticket tck:ticketsList){
+    		if(tck.status.equals("New")){
+    			ticketsListNew.add(tck);
+    		}else if (tck.status.equals("Open")) {
+    			ticketsListOpen.add(tck);
+			}else if (tck.status.equals("Closed")) {
+				ticketsListClosed.add(tck);
+			}
+    		
+    	}
+    	return ok(viewTicket.render(ticketsListNew,ticketsListOpen,ticketsListClosed));
     }
 }

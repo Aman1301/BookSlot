@@ -1,19 +1,21 @@
-@(message: String)
+@(use: String)
 
 <!DOCTYPE html>
 
 <html lang="en">
 <form method="POST" action="/welcomePage/">
     <head>
-    <title>Welcome @message</title>
+    <title>Welcome @use</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
         <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
     </head>
-    <body>
-        Hi, @message
-        <a href="/newTicketPage">Raise a New Ticket</a><p>
-        <a href="/displayTickets" >View All Tickets</a>
+    <body >
+        <div class="stat" >Hi, @use</div>
+        <div align="center" class="stat">Choose Any Option:<p>
+        1.  <a href="/newTicketPage">Raise a New Ticket</a><p>
+        2.  <a href="/displayTickets" >View All Tickets</a>
+        </div>
     </body>
     
     </form>

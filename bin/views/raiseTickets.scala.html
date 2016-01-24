@@ -1,29 +1,46 @@
-@(tic_id: String, ticket: model.Ticket)
+@(tic_id: String, ticket: Form[model.Ticket])
 
 <!DOCTYPE html>
-
+@import helper._
 <html lang="en">
-<form method="POST" action="/newTicketPage">
+<script type="text/javascript">
+function cancelFunc(){
+	alert("sd");
+	
+	document.myForm.method="GET";
+	document.myForm.action="/welcomePage";
+	return true;
+}
+
+</script>
+<form name="myForm" id="myForm" method="POST" action="/newTicketPage">
     <head>
     <title>Welcome </title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
         <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
     </head>
+   
     <body>
-        <p>
-        Customer Information<input type="text" name="customerInfo" value=@ticket.customerInfo><p>
-        Comments <input type="text" name="comment" value=@ticket.comment><p>
-        Created By<input type="text" name="createdBy" value=@ticket.createdBy><p>
-        Assigned To<input type="text" name="assignedTo"  value=@ticket.assignedTo><p>
-       	Status<select name="status" >
-       	<option value='New'>New</option>
-       	<option value='Open'>Open</option>
-       	<option value="Closed">Closed</option>	
-       	</select>
-        <input type="submit" name="submit" value="Send">
-        
-    </body>
-    
+	<!--     <form method="POST" action="/updateTicket/@tic_id"> -->
+	@helper.form(action=routes.Application.newTicketPage()){
+	<p>
+	<fieldset >
+	<legend>Raise Ticket</legend>
+	<div align="left" class="fieldLabels">
+		@helper.inputText(ticket("customerInfo"),'_label -> "Customer Info" )
+		@helper.inputText(ticket("comment"),'_label -> "Comment")
+		@helper.inputText(ticket("createdBy"),'_label -> "Created By")
+		@helper.inputText(ticket("assignedTo"),'_label -> "Assigned To")
+		@select(field = ticket("status"), options = Seq("New"->"New", "Open"->"Open", "Closed"->"Closed"),'_label -> "Status")
+		
+     	<input type="submit" name="submit" value="Send">
+<!--      	<input type="submit" name="cancel" value="Cancel" onclick="return cancelFunc()"> -->
+	</div>
+	</fieldset>
+	
+	
+	}
+</body>
     </form>
 </html>

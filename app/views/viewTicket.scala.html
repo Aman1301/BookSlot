@@ -11,22 +11,79 @@
     </head>
     <body>
     <form method="GET" action="/displayTickets">
-    <p>New<p>
+    <fieldset>
+    <legend>All Tickets</legend>
+    <table border="1" >
+   <tr >
+   <td colspan="3" class="stat">New</td>
+   </tr>
+   <tr>
+    <td bgcolor="red">Ticket Id</td>
+      <td bgcolor="red">Customer Info</td>
+         <td bgcolor="red">Change</td>
+   </tr>
+  @if(ticketsListNew.isEmpty()){
+    <tr ><td colspan="3">
+   No Records Found for Status NEW
+   </td>
+   </tr>
+   }
     @for(newS <- ticketsListNew){
-	@newS.ticketId<a href="/editTicketStatus/@newS.ticketId"> Edit</a><p>
-	@newS.customerInfo<p>
-}
-<p>Open<p>	
-   @for(open <- ticketsListOpen){
-	@open.ticketId<a href="/editTicketStatus/@open.ticketId"> Edit</a><p>
-	@open.customerInfo<p>
-}
-<p>Closed<p>
-  @for(closed <- ticketsListClosed){
-	@closed.ticketId<p>
-	@closed.customerInfo<p>
-}
-
+    <tr>
+   <td >@newS.ticketId</td>
+   <td >@newS.customerInfo</td>
+   <td> <a href="/editTicketStatus/@newS.ticketId"> Edit</a></td>
+   </tr>
+   }
+   
+   
+   <tr>
+   <td colspan="3" class="stat">Open</td>
+   </tr>
+   <tr>
+   <td bgcolor="red">Ticket Id</td>
+      <td bgcolor="red">Customer Info</td>
+         <td bgcolor="red">Change</td>
+   </tr>
+  
+   @if(ticketsListOpen.isEmpty()){
+    <tr ><td colspan="3">
+   No Records Found for Status OPEN
+   </td>
+   </tr>
+   }
+    @for(open <- ticketsListOpen){
+    <tr>
+   <td >@open.ticketId</td>
+   <td >@open.customerInfo</td>
+   <td> <a href="/editTicketStatus/@open.ticketId"> Edit</a></td>
+   </tr>
+   }
+   
+    <tr>
+   <td colspan="3" class="stat">Closed</td>
+   </tr>
+   <tr>
+    <td bgcolor="red">Ticket Id</td>
+      <td bgcolor="red">Customer Info</td>
+         <td bgcolor="red">Change</td>
+   </tr>
+   @if(ticketsListClosed.isEmpty()){
+    <tr ><td colspan="3">
+   No Records Found for Status CLOSED
+   </td>
+   </tr>
+   }
+    @for(closed <- ticketsListClosed){
+    <tr>
+   <td >@closed.ticketId</td>
+  
+   <td >@closed.customerInfo</td>
+    <td>Ticket Closed Already</td>
+   </tr>
+   }
+</table>
+</fieldset>
     </form>
     </body>
     
